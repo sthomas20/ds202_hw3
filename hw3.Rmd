@@ -73,22 +73,35 @@ cor(tips$tip, tips$total_bill)
 ##### **Question 7**
 7. Introduce a variable `tiprate` into the data set which stands for the rate of tips. What is the average rate for tips? Explain verbally. 
 ```{r}
-head(tips)
-denom<- nrow(tips)
-denom
-num<- sum(tips$tip)
-num
-tiprate<- num/denom
-tiprate
+tips$tiprate <- tips$tip/tips$total_bill
+mean(tips$tiprate)
 ```
-The average rate for tips found from the data set is about $2.99 or you could round it to about $3. I added up all the tips and divided it by the number of tips to get this number. 
+Based on the output above on average the cutomers will tip the about 16% of the total bill.
 
 ##### **Question 8**
 8. Make a boxplot of the tip rate by time. The x-axis should be ordered by lunch and then dinner. Use `ggplot2` to make a chart. Verbally explain the chart.
+```{r}
+time2<- factor(tips$time, levels = c("Lunch", "Dinner"))
+time2
+ggplot(tips, aes(x = time2, y = tiprate)) + geom_boxplot() + coord_flip() + xlab('Time') + ylab('Tip Rate') + ggtitle('Tip Rate based off of Time')
+```
 
+Based on the boxplots you can see that the both dinner and lunch times have about the same average tip rate. But dinner time contains more outliers and has a larger range between Q1 and Q3.
 
+##### **Question 9**
 9. How does smoking behavior and gender of the person who pays impact the relationship between tip and total bill? Find a visualization that incorporates all four variables. Interpret the result.
+```{r}
 
+
+```
+
+##### **Question 10**
 10. Use ggplot2 to find a graphical summary of the relationship between day of the week and gender of the person paying the bill. What can you say about this relationship?
+```{r}
+ggplot(tips, aes(x=factor(day, levels = c('Thur', 'Fri', 'Sat', 'Sun')), fill=sex)) + geom_bar() + xlab('Day') + ylab('Count') + ggtitle('Relationship between day of the week and gender')
+```
+
+Based on the output above it seems like the relationship between the gender during the week is about the same and evenly distributed. But when it comes to the weekend on Saturday and Sunday you can clearly see that a lot more males tend to pay for the bill than females. 
+
 
 Note: your submission is supposed to be fully reproducible, i.e. the TA and I will 'knit' your submission in RStudio. 
