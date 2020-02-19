@@ -13,8 +13,6 @@ knitr::opts_chunk$set(echo = TRUE)
 In this homework we will use the `tips` data set. This data set is part of the `reshape2` package. You can load the data set by executing the command:
 ```{r}
 data(tips, package="reshape2")
-#install.packages('reshape2')
-
 ```
 If you do not have available the package `reshape2`, issue `install.packages('reshape2')` to install it. The information contained in the data is collected by one waiter, who recorded over the course of a season information about each tip he received working in one restaurant. See `?tips` for a description of all of the variables. 
 
@@ -68,7 +66,7 @@ cor(tips$tip, tips$total_bill)
 #### **Question 6**
 6. Describe at least two types of anomalies in the previous plot. What do they mean?
 
-**One thing that is inconsistent in the graph is the is the density of the data. For example throughout the graph some areas contain many points/dots while some areas are more spread out. Another thing is that you can see that the amount of outliers in the data are also quite spread out throughout the graph.**
+**One thing that is inconsistent in the graph is the is the density of the data. For example throughout the graph some areas contain many points/dots while some areas are more spread out. Another thing is that you can see that the amount of outliers in the data are also quite spread out throughout the graph. Also it seemed after tiping around $3 you can see the graph no longer follows a linear relationship**
 
 ##### **Question 7**
 7. Introduce a variable `tiprate` into the data set which stands for the rate of tips. What is the average rate for tips? Explain verbally. 
@@ -91,9 +89,13 @@ Based on the boxplots you can see that the both dinner and lunch times have abou
 ##### **Question 9**
 9. How does smoking behavior and gender of the person who pays impact the relationship between tip and total bill? Find a visualization that incorporates all four variables. Interpret the result.
 ```{r}
-
-
+label<- paste(tips$sex, tips$smoker)
+df <- tips
+df$label <- label
+ggplot(df, aes(x=total_bill, y=tip, color= label)) + geom_point() + xlab('Tip') + ylab('Total Bill') + ggtitle('Relationship between 4 variables: smoker status, gender, tip, and total bill')
 ```
+
+Based on the graph and the output above it seems as if overall males tend to tip more than females. They also seem to have a lot higher bills than females and you can see that in a few outliers in the graph. It also seems that males who smoke tip higher than males who don't smoke and for females it seems like females who don't smoke tip just a little bit more than those who do. 
 
 ##### **Question 10**
 10. Use ggplot2 to find a graphical summary of the relationship between day of the week and gender of the person paying the bill. What can you say about this relationship?
